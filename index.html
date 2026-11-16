@@ -2,11 +2,24 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<!-- Google Tag Manager -->
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSDL8WGT"></script>
+<!-- Modo de consentimiento de Google (v2): todo denegado hasta que el visitante acepte -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', functionality_storage: 'granted', security_storage: 'granted',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  try {
+    var c = localStorage.getItem('xispa_consent');
+    if (c === 'granted') gtag('consent', 'update', { analytics_storage: 'granted' });
+  } catch (e) {}
+</script>
+<!-- Google Tag Manager -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSDL8WGT"></script>
+<script>
   gtag('js', new Date());
 </script>
 <!-- End Google Tag Manager -->
@@ -449,6 +462,24 @@ body.go .in,body.go .hero .dot{animation-play-state:running}
 .ftr .cols a:hover{color:#1d1d1f}
 .ftr .bot{padding-top:24px;font-size:13px;color:var(--dim-2)}
 @media (max-width:600px){.ftr .cols{grid-template-columns:1fr 1fr}}
+/* ===== banner de cookies ===== */
+.ck{position:fixed;left:16px;right:16px;bottom:16px;z-index:100;max-width:560px;margin-left:auto;background:rgba(20,20,21,.96);backdrop-filter:saturate(1.8) blur(18px);-webkit-backdrop-filter:saturate(1.8) blur(18px);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px 22px 20px;box-shadow:0 24px 60px -20px rgba(0,0,0,.8);color:#f5f5f7;font-size:14px;line-height:1.5;transform:translateY(16px);opacity:0;transition:transform .4s var(--ease),opacity .4s var(--ease)}
+.ck.show{transform:none;opacity:1}
+.ck[hidden]{display:none}
+.ck h3{font-size:16px;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.ck h3 i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--spark);box-shadow:0 0 10px var(--spark)}
+.ck p{margin:0;color:#d2d2d7}
+.ck details{margin-top:10px;color:var(--dim)}
+.ck summary{cursor:pointer;color:var(--spark);font-weight:500;list-style:none;display:inline}
+.ck summary::-webkit-details-marker{display:none}
+.ck details p{margin-top:8px;color:var(--dim);font-size:13px}
+.ck .acts{display:flex;gap:10px;margin-top:16px}
+.ck .btn{flex:1;padding:11px 16px;font-size:14px}
+.ck .btn-ghost{color:#f5f5f7}
+@media (max-width:600px){.ck{left:12px;right:12px;bottom:12px;padding:18px}}
+.ftr .bot button{background:none;border:0;padding:0;color:inherit;text-decoration:underline;text-underline-offset:2px;font-size:13px;margin-left:12px}
+.ftr .bot button:hover{color:#1d1d1f}
+
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}
@@ -902,9 +933,52 @@ body.go .in,body.go .hero .dot{animation-play-state:running}
         <div><b>Contacto</b><a href="mailto:xispaagency@gmail.com">xispaagency@gmail.com</a><a href="https://instagram.com/xispa.agency" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/company/xispa-agency" target="_blank" rel="noopener">LinkedIn</a></div>
       </div>
     </div>
-    <div class="bot">© <span id="yr">2026</span> Xispa Agency. Todos los derechos reservados.</div>
+    <div class="bot">© <span id="yr">2026</span> Xispa Agency. Todos los derechos reservados. <button type="button" id="ck-open">Configurar cookies</button></div>
   </div>
 </footer>
+
+<div class="ck" id="ck" role="dialog" aria-modal="false" aria-labelledby="ck-t" hidden>
+  <h3 id="ck-t"><i aria-hidden="true"></i>Usamos cookies</h3>
+  <p>Utilizamos cookies de analítica (Google Analytics) para saber cuántas personas visitan la web y mejorarla. Solo se activan si las aceptas. Puedes cambiar de opinión cuando quieras desde «Configurar cookies», al pie de la página.</p>
+  <details>
+    <summary>Más información</summary>
+    <p><b>Técnicas (siempre activas):</b> guardan tu elección sobre las cookies en tu navegador.<br>
+    <b>Analítica (opcional):</b> Google Analytics, de Google Ireland Ltd., usa las cookies <code>_ga</code> y <code>_ga_*</code> para medir visitas de forma agregada. Duran hasta 2 años. No las usamos para publicidad.<br>
+    Responsable: Xispa Agency · <a href="mailto:xispaagency@gmail.com" style="color:var(--spark)">xispaagency@gmail.com</a></p>
+  </details>
+  <div class="acts">
+    <button type="button" class="btn btn-ghost" id="ck-no">Rechazar</button>
+    <button type="button" class="btn btn-spark" id="ck-yes">Aceptar</button>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='xispa_consent', box=document.getElementById('ck');
+  function get(){try{return localStorage.getItem(KEY)}catch(e){return null}}
+  function show(){box.hidden=false;requestAnimationFrame(function(){box.classList.add('show')})}
+  function hide(){box.classList.remove('show');setTimeout(function(){box.hidden=true},400)}
+  function save(v){
+    try{localStorage.setItem(KEY,v)}catch(e){}
+    gtag('consent','update',{analytics_storage:v});
+    window.dataLayer.push({event:'consent_update',consent_analytics:v});
+    if(v==='denied'){
+      // borra cookies de Analytics que pudieran quedar de un consentimiento anterior
+      document.cookie.split(';').forEach(function(c){
+        var n=c.split('=')[0].trim();
+        if(/^_ga/.test(n)){
+          var h=location.hostname.replace(/^www\./,'');
+          ['', '; domain=.'+h, '; domain='+h].forEach(function(d){document.cookie=n+'=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'+d});
+        }
+      });
+    }
+    hide();
+  }
+  document.getElementById('ck-yes').addEventListener('click',function(){save('granted')});
+  document.getElementById('ck-no').addEventListener('click',function(){save('denied')});
+  document.getElementById('ck-open').addEventListener('click',show);
+  if(!get()) setTimeout(show,600);
+})();
+</script>
 
 <script>
 (function(){
