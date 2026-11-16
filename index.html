@@ -52,7 +52,10 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
       "@id": "https://www.xispaagency.com/#organization",
       "name": "Xispa Agency",
       "alternateName": "Xispa",
@@ -70,20 +73,94 @@
         "addressCountry": "ES"
       },
       "areaServed": [
-        { "@type": "City", "name": "Barcelona" },
-        { "@type": "Country", "name": "España" }
+        {
+          "@type": "City",
+          "name": "Barcelona"
+        },
+        {
+          "@type": "Country",
+          "name": "España"
+        }
       ],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
         "telephone": "+34695376716",
         "email": "xispaagency@gmail.com",
-        "availableLanguage": ["es"]
+        "availableLanguage": [
+          "es"
+        ]
       },
       "sameAs": [
         "https://instagram.com/xispa.agency",
         "https://www.linkedin.com/company/xispa-agency"
-      ]
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de Xispa Agency",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Automatizaciones para empresas",
+              "description": "Chatbots, CRM automático, citas y recordatorios, presupuestos, facturas e informes que se hacen solos, conectados con las herramientas que ya usas.",
+              "provider": {
+                "@id": "https://www.xispaagency.com/#organization"
+              },
+              "areaServed": "ES"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Diseño de páginas web y SEO",
+              "description": "Páginas web y tiendas online a medida, preparadas para aparecer en Google, con SEO local y ficha de Google conectada.",
+              "provider": {
+                "@id": "https://www.xispaagency.com/#organization"
+              },
+              "areaServed": "ES"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pack Web",
+              "description": "Una web rápida que aparece en Google y convierte visitas en clientes: web o tienda online a medida, SEO local, formulario y WhatsApp integrados.",
+              "provider": {
+                "@id": "https://www.xispaagency.com/#organization"
+              },
+              "areaServed": "ES"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pack Crecimiento",
+              "description": "Visibilidad y automatizaciones: todo lo del Pack Web más chatbot, CRM automático, citas y recordatorios, y soporte continuo.",
+              "provider": {
+                "@id": "https://www.xispaagency.com/#organization"
+              },
+              "areaServed": "ES"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pack Automatización",
+              "description": "Para negocios que ya tienen web: diagnóstico de tareas repetitivas y automatización de chatbot, CRM, citas o facturas.",
+              "provider": {
+                "@id": "https://www.xispaagency.com/#organization"
+              },
+              "areaServed": "ES"
+            }
+          }
+        ]
+      }
     },
     {
       "@type": "WebSite",
@@ -92,7 +169,63 @@
       "name": "Xispa Agency",
       "alternateName": "Xispa",
       "inLanguage": "es",
-      "publisher": { "@id": "https://www.xispaagency.com/#organization" }
+      "publisher": {
+        "@id": "https://www.xispaagency.com/#organization"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.xispaagency.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué tareas se pueden automatizar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Casi todo lo que hoy haces a mano y se repite: atender consultas con un chatbot, registrar clientes en un CRM, agendar citas y recordatorios, enviar presupuestos y facturas o preparar informes. En la llamada inicial vemos qué te ahorra más horas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Necesito cambiar mis programas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Normalmente no. Trabajamos con lo que ya tienes siempre que se pueda. Si hace falta algo nuevo, te lo decimos antes y por escrito."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto tarda la puesta en marcha?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depende del proyecto. Una web o una automatización suelen estar listas en unas semanas. Te damos el plazo exacto en el diagnóstico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuándo empezaré a ver resultados en Google?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El SEO orgánico es progresivo: la web sale preparada desde el primer día y las mejoras de posición suelen notarse en semanas o pocos meses. No prometemos posiciones concretas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hay permanencia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No trabajamos con permanencias largas. Te explicamos las condiciones de cada servicio antes de empezar, por escrito."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Trabajáis fuera de Barcelona?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Estamos en Cataluña y trabajamos en remoto con negocios de toda España."
+          }
+        }
+      ]
     }
   ]
 }
@@ -116,6 +249,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ink);color:var(--white);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -627,7 +761,7 @@ body.go .in,body.go .hero .dot{animation-play-state:running}
         <div class="svc-head rv">
           <div>
             <span class="num"><i>01</i> Automatizaciones</span>
-            <h3>Lo repetitivo, que se haga solo.</h3>
+            <h3><span class="sr">Automatizaciones para empresas: </span>Lo repetitivo, que se haga solo.</h3>
             <p class="one">Mira cómo trabaja tu negocio cuando nadie tiene que estar pendiente.</p>
           </div>
           <a href="#contacto" class="btn btn-dark cta" data-service="automatizacion">Automatizar mi negocio</a>
@@ -731,7 +865,7 @@ body.go .in,body.go .hero .dot{animation-play-state:running}
         <div class="svc-head rv">
           <div>
             <span class="num"><i>02</i> Páginas web y SEO</span>
-            <h3>Una web que trabaja tanto como tú.</h3>
+            <h3><span class="sr">Diseño de páginas web y posicionamiento SEO: </span>Una web que trabaja tanto como tú.</h3>
             <p class="one">Webs, tiendas online y posicionamiento en Google. Todo hecho a medida.</p>
           </div>
           <a href="#contacto" class="btn btn-dark cta" data-service="web">Quiero mi web</a>
